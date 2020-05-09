@@ -6,7 +6,9 @@ namespace R5T.Gloucester.Types.Construction
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var a = new Settable<string>();
+
+            a = "apple";
         }
     }
 }

@@ -1,4 +1,6 @@
 R5T.Gloucester.Types - A Visual Studio project file types library.
 
+NOTE: works ONLY with .NET Core (and .NET Standard) project file types.
+
 Goals
 
