@@ -13,6 +13,7 @@ namespace R5T.Gloucester.Types
         // Provide instance to make sure we don't have a null references.
         public Settable<bool> GenerateDocumentationFile { get; set; } = new Settable<bool>();
         public Settable<bool> IsPackable { get; set; } = new Settable<bool>();
+        public Settable<Version> LanguageVersion { get; set; } = new Settable<Version>();
         public Settable<List<int>> NoWarn { get; set; } = new Settable<List<int>>();
         public Settable<OutputType> OutputType { get; set; } = new Settable<OutputType>();
 
