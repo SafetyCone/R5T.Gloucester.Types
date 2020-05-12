@@ -43,5 +43,11 @@ namespace R5T.Gloucester.Types
         {
             this.Value = value; // Will be set.
         }
+
+        public override string ToString()
+        {
+            var representation = $"{this.Value} ({(this.IsSet ? "set" : "unset" )})";
+            return representation;
+        }
     }
 }
