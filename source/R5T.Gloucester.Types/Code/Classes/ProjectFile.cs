@@ -33,11 +33,6 @@ namespace R5T.Gloucester.Types
             this.PackageReferences.Add(packageReference);
         }
 
-        public void AddProjectReference(IProjectReference projectReference)
-        {
-            this.ProjectReferences.Add(projectReference);
-        }
-
         public void RemovePackageReference(IPackageReference packageReference)
         {
             this.PackageReferences.Remove(packageReference);
@@ -46,6 +41,24 @@ namespace R5T.Gloucester.Types
         public void RemoveProjectReference(IProjectReference projectReference)
         {
             this.ProjectReferences.Remove(projectReference);
+        }
+
+        public IProjectReference AddProjectReference(string projectFilePath)
+        {
+            var projectReference = new ProjectReference(projectFilePath);
+
+            this.ProjectReferences.Add(projectReference);
+
+            return projectReference;
+        }
+
+        public IPackageReference AddPackageReference(string name, string versionString)
+        {
+            var packageReference = new PackageReference(name, versionString);
+
+            this.PackageReferences.Add(packageReference);
+
+            return packageReference;
         }
     }
 }
