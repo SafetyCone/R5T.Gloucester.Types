@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using R5T.T0002;
 using R5T.T0003;
@@ -33,18 +34,26 @@ namespace R5T.Gloucester.Types
             this.PackageReferences.Add(packageReference);
         }
 
-        public void RemovePackageReference(IPackageReference packageReference)
+        public bool RemovePackageReference(IPackageReference packageReference)
         {
-            this.PackageReferences.Remove(packageReference);
+            var removed = this.PackageReferences.Remove(packageReference);
+            return removed;
         }
 
-        public void RemoveProjectReference(IProjectReference projectReference)
+        public bool RemoveProjectReference(IProjectReference projectReference)
         {
-            this.ProjectReferences.Remove(projectReference);
+            var removed = this.ProjectReferences.Remove(projectReference);
+            return removed;
         }
 
         public IProjectReference AddProjectReference(string projectFilePath)
         {
+            var hasProjectReference = this.HasProjectReference(projectFilePath);
+            if(hasProjectReference)
+            {
+                throw new InvalidOperationException($"Project file already has project reference:\n{projectFilePath}");
+            }
+
             var projectReference = new ProjectReference(projectFilePath);
 
             this.ProjectReferences.Add(projectReference);
@@ -54,11 +63,33 @@ namespace R5T.Gloucester.Types
 
         public IPackageReference AddPackageReference(string name, string versionString)
         {
+            var hasPackageReference = this.HasPackageReference(name, versionString);
+            if(hasPackageReference)
+            {
+                throw new InvalidOperationException($"Project file already has package reference:\nName: {name}, Version: {versionString}");
+            }
+
             var packageReference = new PackageReference(name, versionString);
 
             this.PackageReferences.Add(packageReference);
 
             return packageReference;
+        }
+
+        public bool HasProjectReference(string projectFilePath, out IProjectReference projectReference)
+        {
+            projectReference = this.ProjectReferences.Where(x => x.ProjectFilePath == projectFilePath).SingleOrDefault();
+
+            var hasProjectReference = projectReference == default;
+            return hasProjectReference;
+        }
+
+        public bool HasPackageReference(string name, string versionString, out IPackageReference packageReference)
+        {
+            packageReference = this.PackageReferences.Where(x => x.Name == name && x.VersionString == versionString).SingleOrDefault();
+
+            var hasPackageReference = packageReference == default;
+            return hasPackageReference;
         }
     }
 }
