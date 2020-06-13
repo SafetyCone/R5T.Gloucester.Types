@@ -21,7 +21,31 @@ namespace R5T.Gloucester.Types
         public Settable<OutputType> OutputType { get; set; } = new Settable<OutputType>();
         public Settable<TargetFramework> TargetFramework { get; set; } = new Settable<TargetFramework>();
 
-        public IList<ProjectReference> ProjectReferences { get; } = new List<ProjectReference>();
-        public IList<PackageReference> PackageReferences { get; } = new List<PackageReference>();
+        public List<IPackageReference> PackageReferences { get; } = new List<IPackageReference>();
+        IEnumerable<IPackageReference> IVisualStudioProjectFile.PackageReferences => this.PackageReferences;
+
+        public List<IProjectReference> ProjectReferences { get; } = new List<IProjectReference>();
+        IEnumerable<IProjectReference> IVisualStudioProjectFile.ProjectReferences => this.ProjectReferences;
+
+
+        public void AddPackageReference(IPackageReference packageReference)
+        {
+            this.PackageReferences.Add(packageReference);
+        }
+
+        public void AddProjectReference(IProjectReference projectReference)
+        {
+            this.ProjectReferences.Add(projectReference);
+        }
+
+        public void RemovePackageReference(IPackageReference packageReference)
+        {
+            this.PackageReferences.Remove(packageReference);
+        }
+
+        public void RemoveProjectReference(IProjectReference projectReference)
+        {
+            this.ProjectReferences.Remove(projectReference);
+        }
     }
 }
