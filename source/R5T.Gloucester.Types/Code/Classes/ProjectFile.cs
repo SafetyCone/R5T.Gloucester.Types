@@ -91,5 +91,10 @@ namespace R5T.Gloucester.Types
             var hasPackageReference = packageReference == default;
             return hasPackageReference;
         }
+
+        public bool HasPackageReference(string name, out IPackageReference packageReference)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
